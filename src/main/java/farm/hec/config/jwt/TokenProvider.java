@@ -1,8 +1,16 @@
 package farm.hec.config.jwt;
 
+import farm.hec.config.auth.PrincipalDetails;
+import farm.hec.data.type.TokenType;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.nio.charset.StandardCharsets;
+import java.time.ZonedDateTime;
+import java.util.Date;
 
 @Slf4j
 @Component
@@ -76,10 +84,8 @@ public class TokenProvider {
                     .build()
                     .parseClaimsJws(token);
 
-            // If no exception is thrown, the token is valid
             return true;
         } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | IllegalArgumentException e) {
-            // Log the exception (or handle it as needed)
             log.error("Invalid JWT token: {}", e.getMessage());
             return false;
         }
