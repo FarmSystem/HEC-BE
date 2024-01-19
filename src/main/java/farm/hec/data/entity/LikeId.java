@@ -8,8 +8,8 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class LikeId implements Serializable {
-    private String userId;
-    private Long postId;
+    private String user;
+    private Long post;
 }

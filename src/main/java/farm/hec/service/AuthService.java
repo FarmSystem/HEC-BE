@@ -8,9 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 public interface AuthService {
-    Boolean checkJoin(LoginRequestDto loginRequestDto);
+    Boolean checkJoin(String userId);
     void join(LoginRequestDto loginRequestDto, MultipartFile profileImage);
-    TokenResponseDto login(PrincipalDetails principalDetails);
+    TokenResponseDto login(LoginRequestDto loginRequestDto);
     String saveProfileImage(MultipartFile profileImage);
 
 }

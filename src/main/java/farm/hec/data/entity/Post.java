@@ -2,6 +2,7 @@ package farm.hec.data.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,4 +36,11 @@ public class Post {
     @CreationTimestamp
     private Date postCreateAt;
 
+    @Builder
+    public Post(Long postId, String postContent, User user, Discover discover) {
+        this.postId = postId;
+        this.postContent = postContent;
+        this.user = user;
+        this.discover = discover;
+    }
 }

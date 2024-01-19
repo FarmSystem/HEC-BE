@@ -38,3 +38,7 @@ out/
 
 app.yml
 application.yml
+
+.env.*
+.env.db
+.env.dev

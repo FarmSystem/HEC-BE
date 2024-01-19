@@ -1,10 +1,7 @@
 package farm.hec.data.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Generated;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
@@ -12,6 +9,7 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
+@Builder
 public class Discover {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +19,8 @@ public class Discover {
     private Date discoverDate;
     private String discoverLocation;
     private String discoverImagePath;
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
 }

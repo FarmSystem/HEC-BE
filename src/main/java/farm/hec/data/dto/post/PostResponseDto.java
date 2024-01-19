@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Getter
 @NoArgsConstructor
 public class PostResponseDto {
@@ -11,14 +13,14 @@ public class PostResponseDto {
     private String authorNickname;
     private String authorProfileImagePath;
     private String postContent;
-    private Long postLikes;
+    private Integer postLikes;
     private String postImagePath;
-    private String discoverDate;
+    private Date discoverDate;
     private String discoverLocation;
     private Boolean isLiked;
 
     @Builder
-    public PostResponseDto(Long postId, String authorNickname, String authorProfileImagePath, String postContent, Long postLikes, String postImagePath, String discoverDate, String discoverLocation, Boolean isLiked) {
+    public PostResponseDto(Long postId, String authorNickname, String authorProfileImagePath, String postContent, Integer postLikes, String postImagePath, Date discoverDate, String discoverLocation, Boolean isLiked) {
         this.postId = postId;
         this.authorNickname = authorNickname;
         this.authorProfileImagePath = authorProfileImagePath;

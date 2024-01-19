@@ -45,9 +45,19 @@ public class UserServiceImpl implements UserService {
             log.error("[UserService] changeUserInfo : 존재하지 않는 사용자입니다.");
             throw new IllegalArgumentException("존재하지 않는 사용자입니다.");
         }
-        user.get().setUserName(userChangeDto.getUserName());
-        user.get().setUserNickname(userChangeDto.getUserNickname());
-        user.get().setUserProfileImagePath(saveProfileImage(profileImage));
+//        user.get().setUserName(userChangeDto.getUserName());
+//        user.get().setUserNickname(userChangeDto.getUserNickname());
+//        user.get().setUserProfileImagePath(saveProfileImage(profileImage));
+        //patch mapping 사용으로 값이 없을 수 있음
+        if (userChangeDto.getUserName() != null) {
+            user.get().setUserName(userChangeDto.getUserName());
+        }
+        if (userChangeDto.getUserNickname() != null) {
+            user.get().setUserNickname(userChangeDto.getUserNickname());
+        }
+        if (profileImage != null) {
+            user.get().setUserProfileImagePath(saveProfileImage(profileImage));
+        }
         userRepository.save(user.get());
         return UserResponseDto.builder()
                 .userId(user.get().getUserId())
@@ -81,6 +91,6 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Failed to store file {}", e);
         }
 
-        return path.toString();
+        return "/images/profile/" + randomFileName;
     }
 }

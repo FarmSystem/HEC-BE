@@ -34,8 +34,8 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
-    public Boolean checkJoin(LoginRequestDto loginRequestDto) {
-        return userRepository.existsById(loginRequestDto.getUserId());
+    public Boolean checkJoin(String userId) {
+        return userRepository.existsById(userId);
     }
 
     public void join(LoginRequestDto loginRequestDto, MultipartFile profileImage) {
@@ -48,28 +48,17 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
-    public TokenResponseDto login(PrincipalDetails principalDetails)
-    {
-        String accessToken = tokenProvider.generateAccessToken(principalDetails);
-        String refreshToken = tokenProvider.generateRefreshToken(principalDetails);
-        /*
-
-        //Redis 에 저장 - 만료 시간 설정을 통해 자동 삭제 redis 기능 활성화시 @Transactional 추가
-        redisTemplate.opsForValue().set(
-                principalDetails.getUsername(),
-                refreshToken,
-                refreshTokenExpirationMinutes,
-                TimeUnit.MINUTES
-        );*/
+    public TokenResponseDto login(LoginRequestDto loginRequestDto) {
+        User user = userRepository.findByUserId(loginRequestDto.getUserId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+        String accessToken = tokenProvider.generateAccessToken(new PrincipalDetails(user));
+        String refreshToken = tokenProvider.generateRefreshToken(new PrincipalDetails(user));
 
         return TokenResponseDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
     }
-
-
-
 
     public String saveProfileImage(MultipartFile profileImage) {
         if (profileImage.isEmpty()) {
@@ -97,7 +86,7 @@ public class AuthServiceImpl implements AuthService {
             throw new IllegalArgumentException("Failed to store file {}", e);
         }
 
-        return path.toString();
+        return "/images/profile/" + randomFileName;
     }
 
 }

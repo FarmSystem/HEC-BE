@@ -8,7 +8,7 @@ import farm.hec.data.dto.post.PostResponseDto;
 import java.util.List;
 
 public interface PostService {
-    List<PostInfoDto> getPostList(PrincipalDetails principalDetails, Integer page, Integer size);
+    List<PostInfoDto> getPostList(PrincipalDetails principalDetails, Integer page, Long postId);
     PostResponseDto getPost(PrincipalDetails principalDetails, Long postId);
     PostResponseDto createPost(PrincipalDetails principalDetails, PostCreateDto postCreateDto);
     void likePost(PrincipalDetails principalDetails, Long postId);
