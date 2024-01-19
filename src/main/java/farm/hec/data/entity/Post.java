@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.LazyGroup;
 import org.springframework.context.annotation.Lazy;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
@@ -19,13 +20,19 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
     private String postContent;
-    private String postLikes;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "post", orphanRemoval = true, fetch = FetchType.LAZY)
+    private ArrayList<Like> likes = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
     private User user;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "discoverId")
+    private Discover discover;
+
     @CreationTimestamp
-    private Date createAt;
+    private Date postCreateAt;
 
 }

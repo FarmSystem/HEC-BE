@@ -16,12 +16,9 @@ public class Discover {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long discoverId;
-
+    private Integer categoryId;
+    private Integer commonId;
     private Date discoverDate;
     private String discoverLocation;
-    private String discoverImage;
-
-    @OneToOne
-    @JoinColumn(name = "commonId")
-    private Common common;
+    private String discoverImagePath;
 }
